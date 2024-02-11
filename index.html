@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Todo List</h1>
+    <h3>Nueva Tarea</h3>
+    <input id="nuevoTarea"> 
+    <button id="agregarTarea">Agregar</button> 
+    <h3>Tareas: </h3>
+    <ul id="Tareas"></ul> 
+    <h4 id="cuenta-tareas">Total:</h4>
+    <h4 id="realizadas">Realizadas:</h4>
+
+    <script>
+
+        function crearContador() {
+            let contador = 0;
+            return function () {
+                contador++;
+                return contador;
+            };
+        }
+
+        const generarID = crearContador();
+
+        const listaDeTareas = document.querySelector("#Tareas")
+        const tareaInput = document.querySelector("#nuevoTarea")
+        const btnAgregar = document.querySelector("#agregarTarea")
+        const cuentaTareas = document.querySelector("#cuenta-tareas")
+        const tareaCompletadas = document.querySelector("#realizadas")
+        
+
+        const tareas = []
+
+        function renderTareas() {
+            let html = ""
+            for (let tarea of tareas) {
+                html += `<li>${tarea.id} ${tarea.nombre} <button onclick="completar(${tarea.id})">☐</button> <button onclick="borrar(${tarea.id})"> ❌ </button> </li>`;
+            }
+            listaDeTareas.innerHTML = html;
+            cuentaTareas.textContent = `Total:${tareas.length}`;
+        }
+        btnAgregar.addEventListener("click", () => {
+            const nuevoTarea = { id: generarID(), nombre: tareaInput.value }
+            tareas.push(nuevoTarea)
+            tareaInput.value = ""
+            renderTareas()
+        })
+
+
+        function completar(id) {
+            const index = tareas.findIndex((ele) => ele.id == id)
+            tareas.splice(index, 0,  )
+            nuevoTarea.check = true
+            
+            renderTareas()
+        }
+
+        function borrar(id) {
+            const index = tareas.findIndex((ele) => ele.id == id)
+            tareas.splice(index, 1)
+            renderTareas()
+        }
+
+        
+    </script>
+
+</body>
+
+</html>
